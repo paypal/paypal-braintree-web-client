@@ -1,15 +1,35 @@
 /* @flow */
 
-import { getPayPalDomain, getPayPalAPIDomain, getPayPalLoggerDomain, buildPayPalUrl, buildPayPalAPIUrl, getPayPalLoggerUrl } from '../../src';
+import { insertMockSDKScript, getPayPalDomain, getPayPalAPIDomain, getPayPalLoggerDomain, buildPayPalUrl, buildPayPalAPIUrl, getPayPalLoggerUrl } from '../../src';
 
 describe(`config cases`, () => {
 
     it('should successfully get the paypal domain', () => {
+        window.__ENV__ = 'foo-1';
         const expectedPayPalDomain = 'mock://www.paypal.com';
 
         if (getPayPalDomain() !== expectedPayPalDomain) {
             throw new Error(`Expected paypal domain to be ${ expectedPayPalDomain }, got ${ getPayPalDomain() }`);
         }
+
+        delete window.__ENV__;
+    });
+
+    it('should successfully get the sandbox paypal domain', () => {
+        const expectedPayPalDomain = 'https://www.sandbox.paypal.com';
+        window.__ENV__ = 'sandbox';
+
+        insertMockSDKScript({
+            query: {
+                'client-id': 'sb'
+            }
+        });
+
+        if (getPayPalDomain() !== expectedPayPalDomain) {
+            throw new Error(`Expected paypal domain to be ${ expectedPayPalDomain }, got ${ getPayPalDomain() }`);
+        }
+
+        delete window.__ENV__;
     });
 
     it('should successfully get the paypal api domain', () => {

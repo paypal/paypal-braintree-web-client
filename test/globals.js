@@ -5,6 +5,7 @@ type TestGlobals = {|
 |};
 
 export const sdkClientTestGlobals : TestGlobals = {
+    __ENV__:        () => 'window.__ENV__ || "test-foo"',
     __PORT__:       8000,
     __STAGE_HOST__: 'msmaster.qa.paypal.com',
     __HOST__:       'test.paypal.com',

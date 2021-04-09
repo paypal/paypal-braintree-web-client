@@ -10,6 +10,7 @@ import { getSDKQueryParam } from './script';
 const SANDBOX_V2 = 'sandbox_v2';
 
 export function getPayPalDomain() : string {
+    console.karma(__ENV__)
     if (__ENV__ === ENV.LOCAL) {
         return `${ getProtocol() }://${ getHost() }`;
     }
